@@ -5,7 +5,7 @@
 //manejar esa información de acuerdo a lo que se debe renderizar
 
 import { useEffect, useState } from "react";
-import { API } from "../API";
+const BASE_URL = "https://rickandmortyapi.com/api/";
 
 export const useGet = (endpoint) => {
   const [data, setData] = useState([]);
@@ -14,9 +14,10 @@ export const useGet = (endpoint) => {
 
   const getData = async (endpoint) => {
     try {
-      const { data } = await API.get(endpoint);
-      console.log(data);
-      setData(data);
+      const res = await fetch(`${BASE_URL}/${endpoint}`);
+      const json = await res.json();
+      console.log(json);
+      setData(json);
       setTimeout(() => {
         setLoading(false); //simulo una carga un poco más notoria
       }, 2000);
